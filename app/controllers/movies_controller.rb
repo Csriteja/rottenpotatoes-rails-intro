@@ -5,9 +5,19 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-
+  
   def index
-    @movies = Movie.all
+    @ratings_to_show = []
+    if params[:ratings].present?
+      @ratings = params[:ratings]
+      @ratings_to_show=@ratings.keys
+      @movies = Movie.where(:rating => @ratings_to_show)
+    else
+      @ratings = {'G'=>1,'PG'=>1,'PG-13'=>1,'R'=>1}
+      @movies = Movie.all
+    end
+    @all_ratings = Movie.all_ratings
+    
   end
 
   def new
