@@ -8,16 +8,26 @@
       <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show.include?(rating), class: 'form-check-input' %>
     </div>
   <% end %>
-  <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
+  <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'bytn btn-primary' %>
 <% end %>
 <%#  Part 2: Start here... %>
 
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <% if @sort_by == 'title' %>
+        <th class="hilite bg-warning">
+      <% else %>
+        <th>
+      <%end%>
+        <%= link_to "Movie Title", :sort => 'title',:id => 'title_header'%></th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <% if @sort_by == 'release_date' %>
+        <th class="hilite bg-warning">
+      <% else %>
+        <th>
+      <%end%>
+        <%= link_to "Release Date", :sort => 'release_date', :id => 'release_date_header'%></th>
       <th>More Info</th>
     </tr>
   </thead>
