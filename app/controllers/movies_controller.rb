@@ -31,13 +31,12 @@ class MoviesController < ApplicationController
       @ratings = nil
     end
     
-    # if !@ratings
-    #   @ratings = Hash.new
-    #   @all_ratings.each do |rating|
-    #     @ratings[rating] = 1
-    #   end
-    # end
-    if @ratings
+    if @ratings.nil?
+      @ratings = Hash.new
+      @all_ratings.each do |rating|
+        @ratings[rating] = 1
+      end
+    else
       @ratings_to_show = @ratings.keys
     end
     
@@ -55,7 +54,6 @@ class MoviesController < ApplicationController
     else
       @movies = Movie.all
     end
-  
   end
 
   def new
