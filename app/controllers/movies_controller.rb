@@ -8,6 +8,10 @@ class MoviesController < ApplicationController
   
   def index
     
+    if request.env['PATH_INFO'] == '/'
+      session.clear
+    end
+    
     redirect_flag = 0
     @ratings_to_show = []
     @default_ratings = nil
