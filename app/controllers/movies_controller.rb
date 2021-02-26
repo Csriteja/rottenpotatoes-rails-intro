@@ -10,6 +10,7 @@ class MoviesController < ApplicationController
     
     redirect_flag = 0
     @ratings_to_show = []
+    @default_ratings = nil
     @all_ratings = Movie.all_ratings
     if params[:button_clicked]
       session[:ratings]=params[:ratings]
@@ -39,12 +40,12 @@ class MoviesController < ApplicationController
     end
     
     if @ratings.nil?
-      @ratings = Hash.new
+      @default_ratings = Hash.new
       @all_ratings.each do |rating|
-        @ratings[rating] = 1
+        @default_ratings[rating] = 1
       end
     else
-      @ratings_to_show = @ratings.keys
+      @ratings_to_show = (@ratings == @default_ratings) ? [] : @ratings.keys
     end
     
     if redirect_flag == 1
