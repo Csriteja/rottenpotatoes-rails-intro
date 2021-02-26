@@ -7,9 +7,16 @@ class MoviesController < ApplicationController
   end
   
   def index
-    redirect_flag = false
+    
+    redirect_flag = 0
     @ratings_to_show = []
     @all_ratings = Movie.all_ratings
+    if params[:button_clicked]
+      session[:ratings]=params[:ratings]
+      if params[:ratings].nil? && params[:sort].nil?
+        session[:sort]=nil
+      end
+    end
     
     if params[:sort]
       @sort_by = params[:sort]
@@ -40,7 +47,7 @@ class MoviesController < ApplicationController
       @ratings_to_show = @ratings.keys
     end
     
-    if redirect_flag
+    if redirect_flag == 1
       flash.keep
       redirect_to movies_path :sort => @sort_by, :ratings => @ratings
     end
